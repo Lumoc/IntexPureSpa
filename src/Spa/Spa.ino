@@ -43,7 +43,7 @@
 *   S E L E C T    Y O U R   S P A   M O D E L 
 *  
 ********************************************************/
-//#define _28458_28462_   // For spa model #28458 #28462 #28457(US) #28461(US)
+#define _28458_28462_   // For spa model #28458 #28462 #28457(US) #28461(US)
 //#define _28442_28440_   // For spa Model #28442 #28440
 
 #if  defined (_28458_28462_) &&  defined (_28442_28440_)
@@ -120,8 +120,8 @@ SoftwareSerial mySerial(2, 4); // RX, TX
 #endif
 
 //Version and date
-#define _VERSION         "1.1.1"
-#define _BUILD_DATE_TIME "2021.07.31 21:27:53"
+#define _VERSION         "1.2.0"
+#define _BUILD_DATE_TIME "2022.08.08 12:00:00"
 
 
 //Command
@@ -447,7 +447,7 @@ void loop() {
     {  
       if (millis() - LastTimeReciveData > 5000)
         {
-        SendValue("IntexSpa/Communication with pump", false,ID_COM_PUMP); 
+        SendValue("IntexSpa/Communication-with-pump", false,ID_COM_PUMP); 
         ErrorCommunicationWithPump = true;
 #ifdef _28442_28440_
         if ( FirstCommandChar - UsedChannel> 0x80 ){
@@ -463,7 +463,7 @@ void loop() {
         
       }
       else{
-        SendValue("IntexSpa/Communication with pump", true,ID_COM_PUMP); 
+        SendValue("IntexSpa/Communication-with-pump", true,ID_COM_PUMP); 
         ErrorCommunicationWithPump = false;
       }
     }
@@ -590,7 +590,7 @@ void ReadData (unsigned char c)
 void onConnectionEstablished()
 {
    //manage command power on/off
-    client.subscribe("IntexSpa/Cmd Power on off", [](const String & payload) {
+    client.subscribe("IntexSpa/Cmd-Power-on-off", [](const String & payload) {
       if (payload== "1" || payload== "0"){
         CommandToSend |= COMMAND_ON_OFF ;
         LastTimeSendData = millis();
@@ -598,7 +598,7 @@ void onConnectionEstablished()
     });
 
     //Target Filter time
-    client.subscribe("IntexSpa/Cmd water filter time", [](const String & payload) {
+    client.subscribe("IntexSpa/Cmd-water-filter-time", [](const String & payload) {
       if( (payload== "2" || payload == "4" || payload == "6") ){
         ChangeSetpointRecirculationTime =  StateRecirculation;
         TargetSetpointRecirculationTime = payload.toInt();
@@ -607,7 +607,7 @@ void onConnectionEstablished()
     });
 
    //manage command water filter on/off
-   client.subscribe("IntexSpa/Cmd water filter on off", [](const String & payload) { 
+   client.subscribe("IntexSpa/Cmd-water-filter-on-off", [](const String & payload) { 
    if (payload== "1" && (TargetSetpointRecirculationTime== 2 || TargetSetpointRecirculationTime == 4 || TargetSetpointRecirculationTime == 6)){
       ChangeSetpointRecirculationTime = true;
       SwitchOffRecirculation = false;
@@ -619,7 +619,7 @@ void onConnectionEstablished()
   });
 
    //manage command Bubble on/off
-   client.subscribe("IntexSpa/Cmd bubble on off", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-bubble-on-off", [](const String & payload) {
     if (payload== "1" || payload== "0"){
       CommandToSend |= COMMAND_BUBBLE;
       LastTimeSendData = millis();
@@ -627,7 +627,7 @@ void onConnectionEstablished()
   });
 
    //manage command heater on/off
-   client.subscribe("IntexSpa/Cmd heater on off", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-heater-on-off", [](const String & payload) {
     if (payload== "1" || payload== "0"){
     CommandToSend |= COMMAND_HEATER;
       LastTimeSendData = millis();
@@ -635,7 +635,7 @@ void onConnectionEstablished()
   });  
 
    //manage command Farenheit/Celsius
-   client.subscribe("IntexSpa/Cmd Farenheit Celsius", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-Farenheit-Celsius", [](const String & payload) {
     if (payload== "1" || payload== "0"){
       CommandToSend |= COMMAND_CELSIUS_FARENHEIT;
       LastTimeSendData = millis();
@@ -643,7 +643,7 @@ void onConnectionEstablished()
   }); 
     
    //manage command decrease
-   client.subscribe("IntexSpa/Cmd decrease", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-decrease", [](const String & payload) {
     if (payload== "1")
    {
       LastTimeSendData = millis();
@@ -653,7 +653,7 @@ void onConnectionEstablished()
   }); 
 
    //manage command increase
-   client.subscribe("IntexSpa/Cmd increase", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-increase", [](const String & payload) {
     if (payload== "1"){
       LastTimeSendData = millis();
       TargetSetpointTemperarue = TargetSetpointTemperarue +1;
@@ -662,13 +662,13 @@ void onConnectionEstablished()
   });   
 
    //manage command temperature setpoint
-   client.subscribe("IntexSpa/Cmd Temperature Setpoint", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-Temperature-Setpoint", [](const String & payload) {
     TargetSetpointTemperarue = payload.toInt();
     ChangeTargetSetpointTemperarue = true;
   }); 
 
    // reset
-   client.subscribe("IntexSpa/Cmd Reset ESP", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-Reset-ESP", [](const String & payload) {
     if (payload== "reset"){
       ESP.restart();
     }
@@ -676,7 +676,7 @@ void onConnectionEstablished()
 
 #ifdef _28458_28462_
    //manage command water jet on off
-   client.subscribe("IntexSpa/Cmd water jet on off", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-water-jet-on-off", [](const String & payload) {
     if (payload== "1" || payload== "0"){
       CommandToSend |= COMMAND_WATER_JET;
       LastTimeSendData = millis();
@@ -684,7 +684,7 @@ void onConnectionEstablished()
    });   
 
     //Target Sanitizer time
-   client.subscribe("IntexSpa/Cmd Sanitizer time", [](const String & payload) {
+   client.subscribe("IntexSpa/Cmd-Sanitizer-time", [](const String & payload) {
       if( (payload== "3" || payload == "5" || payload == "8") ){
         ChangeSetpointSanitizerTime =  StateSanitizer;
         TargetSetpointSanitizerTime = payload.toInt();            
@@ -692,7 +692,7 @@ void onConnectionEstablished()
     });
 
    //manage command sanitizer on/off
-   client.subscribe("IntexSpa/Cmd sanitizer on off", [](const String & payload) { 
+   client.subscribe("IntexSpa/Cmd-sanitizer-on-off", [](const String & payload) { 
    if (payload== "1" && (TargetSetpointSanitizerTime== 3 || TargetSetpointSanitizerTime == 5 || TargetSetpointSanitizerTime == 8)){
       ChangeSetpointSanitizerTime = true;
       SwitchOffSanitizer = false;
@@ -722,13 +722,13 @@ void DataManagement (){
 #endif
 
    // Send power on
-   SendValue("IntexSpa/Power on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_CONTROLLER_ON),ID_POWER_ON); 
+   SendValue("IntexSpa/Power-on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_CONTROLLER_ON),ID_POWER_ON); 
 
    //Send Bubble on 
-   SendValue("IntexSpa/Bubble on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_BUBBLE_ON),ID_BUBBLE_ON); 
+   SendValue("IntexSpa/Bubble-on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_BUBBLE_ON),ID_BUBBLE_ON); 
 
    //Send heater on 
-   SendValue("IntexSpa/heater on", (bool)((Data[BYTE_STATUS_COMMAND] & VALUE_HEATER_ON) || (Data[BYTE_STATUS_COMMAND] & VALUE_HEATER_STANDBY)),ID_HEATER_ON); 
+   SendValue("IntexSpa/heater-on", (bool)((Data[BYTE_STATUS_COMMAND] & VALUE_HEATER_ON) || (Data[BYTE_STATUS_COMMAND] & VALUE_HEATER_STANDBY)),ID_HEATER_ON); 
 
    //Send heater State
    uint16_t HeaterState= 0;
@@ -737,7 +737,7 @@ void DataManagement (){
    }else if ((Data[BYTE_STATUS_COMMAND] & VALUE_HEATER_ON) ){
      HeaterState = 2;       // state heater on
    }
-   SendValue("IntexSpa/heater state", HeaterState ,ID_HEATER_STATE); 
+   SendValue("IntexSpa/heater-state", HeaterState ,ID_HEATER_STATE); 
 
    //Send water filter on 
    StateRecirculation =(bool)(Data[BYTE_STATUS_COMMAND] & VALUE_WATER_FILTER_ON);
@@ -745,49 +745,49 @@ void DataManagement (){
 
    //Send actual filter setup time
    ActualSetpointRecirculationTime = Data[BYTE_SETPOINT_TIME_FILTER];
-   SendValue("IntexSpa/filter setup time", Data[BYTE_SETPOINT_TIME_FILTER],ID_WATER_FILTER_TIME); 
+   SendValue("IntexSpa/filter-setup-time", Data[BYTE_SETPOINT_TIME_FILTER],ID_WATER_FILTER_TIME); 
    if (!ChangeSetpointRecirculationTime && ActualSetpointRecirculationTime)
    {
        TargetSetpointRecirculationTime =ActualSetpointRecirculationTime;
-       SendValue("IntexSpa/Cmd water filter time", Data[BYTE_SETPOINT_TIME_FILTER],ID_TARGET_FILTER_TIME);   
+       SendValue("IntexSpa/Cmd-water-filter-time", Data[BYTE_SETPOINT_TIME_FILTER],ID_TARGET_FILTER_TIME);   
    }
 
 #ifdef _28458_28462_
    //Send water jet on 
-   SendValue("IntexSpa/Water jet on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_WATER_JET_ON),ID_VALUE_WATER_JET_ON); 
+   SendValue("IntexSpa/Water-jet-on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_WATER_JET_ON),ID_VALUE_WATER_JET_ON); 
 
   //Send water sanitizer on 
    StateSanitizer =(bool)(Data[BYTE_STATUS_COMMAND] & VALUE_SANITIZER_ON);
-   SendValue("IntexSpa/Sanitizer on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_SANITIZER_ON),ID_SANITIZER_ON); 
+   SendValue("IntexSpa/Sanitizer-on", (bool)(Data[BYTE_STATUS_COMMAND] & VALUE_SANITIZER_ON),ID_SANITIZER_ON); 
 
    //Send actual filter setup time
    ActualSetpointSanitizerTime = Data[BYTE_SETPOINT_TIME_SANITIZER];
-   SendValue("IntexSpa/Sanitizer setup time", Data[BYTE_SETPOINT_TIME_SANITIZER],ID_SANITIZER_TIME); 
+   SendValue("IntexSpa/Sanitizer-setup-time", Data[BYTE_SETPOINT_TIME_SANITIZER],ID_SANITIZER_TIME); 
    if (!ChangeSetpointSanitizerTime && ActualSetpointSanitizerTime)
    {
        TargetSetpointSanitizerTime =ActualSetpointSanitizerTime;
-       SendValue("IntexSpa/Cmd Sanitizer time", Data[BYTE_SETPOINT_TIME_SANITIZER],ID_TARGET_SANITIZER_TIME);   
+       SendValue("IntexSpa/Cmd-Sanitizer-time", Data[BYTE_SETPOINT_TIME_SANITIZER],ID_TARGET_SANITIZER_TIME);   
    }  
 #endif   
    
    //Send Farenheit selected
    FarenheitCelsius = (bool)(Data[BYTE_STATUS_STATUS] & VALUE_FARENHEIT);
-   SendValue("IntexSpa/Farenheit Celsius", (bool)(Data[BYTE_STATUS_STATUS] & VALUE_FARENHEIT),ID_FARENHEIT); 
+   SendValue("IntexSpa/Farenheit-Celsius", (bool)(Data[BYTE_STATUS_STATUS] & VALUE_FARENHEIT),ID_FARENHEIT); 
 
    //Send temperature setpoint
    ActualSetpointTemperarue = Data[BYTE_SETPOINT_TEMPERATURE];
-   SendValue("IntexSpa/Temperature Setpoint", Data[BYTE_SETPOINT_TEMPERATURE],ID_SETPOINT_TEMPERATURE); 
+   SendValue("IntexSpa/Temperature-Setpoint", Data[BYTE_SETPOINT_TEMPERATURE],ID_SETPOINT_TEMPERATURE); 
    if (!ChangeTargetSetpointTemperarue)
    {
        TargetSetpointTemperarue =ActualSetpointTemperarue;
-       SendValue("IntexSpa/Cmd Temperature Setpoint", Data[BYTE_SETPOINT_TEMPERATURE],ID_TARGET_TEMPERATURE);   
+       SendValue("IntexSpa/Cmd-Temperature-Setpoint", Data[BYTE_SETPOINT_TEMPERATURE],ID_TARGET_TEMPERATURE);   
    }
 
    //Send actual temperature
-   SendValue("IntexSpa/Actual Temperature", Data[BYTE_ACTUAL_TEMPERATURE],ID_ACTUAL_TEMPERATURE); 
+   SendValue("IntexSpa/Actual-Temperature", Data[BYTE_ACTUAL_TEMPERATURE],ID_ACTUAL_TEMPERATURE); 
 
   //send Error number
-   SendValue("IntexSpa/Error Number", Data[BYTE_ERROR],ID_ERROR_CODE); 
+   SendValue("IntexSpa/Error-Number", Data[BYTE_ERROR],ID_ERROR_CODE); 
 
   //Manage Command recived
   if (Data[BYTE_STATUS_STATUS] & VALUE_COMMAND_RECIVED){

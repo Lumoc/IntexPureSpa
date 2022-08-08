@@ -1,7 +1,7 @@
-# Intex® PureSpa remote control for Home Automation
+# Intex® PureSpa remote control for Home Automation without spaces in MQTT Topics for Loxone
 
-**Control your PureSpa over MQTT or MySensors *(comming soon)*** for  **#28458, #28462, 28457(US), #28461(US) & #28442, #28440**. 
-No hardware modification and used with Smart Home (optimized for [Jeedom](www.jeedom.com) & [Home Assistant](https://www.home-assistant.io)).
+**Control your PureSpa over MQTT for  **#28458, #28462, 28457(US), #28461(US) & #28442, #28440**. 
+No hardware modification and used with Smart Home (optimized for Loxberry and Loxone.
 
 ## Pictures & Videos
 ![ESP32 to LC12s](Docs/Image/App_2-small.jpg)
@@ -124,27 +124,27 @@ const char* Mypassword = "YourPassword";
 
 | Description                  | Topic String                     | Payload | Payload | Only Status           |
 |------------------------------|----------------------------------|---------|---------|-----------------|
-| **Power**                    | IntexSpa/Cmd Power on off        | ON=1    | OFF=0   | -               |
-| **Water Filter**             | IntexSpa/Cmd water filter on off | ON=1    | OFF=0   | -               |
-| **Water Filter Timer**        | IntexSpa/Cmd water filter time   | hours=2,4,6       | -   | -               |
-| **Bubble**                   | IntexSpa/Cmd bubble on off       | ON=1    | OFF=0   | -               |
-| **Heater**                   | IntexSpa/Cmd heater on off       | ON=1    | OFF=0   | -               |
-| **Change Farenheit/Celsius** | IntexSpa/Cmd Farenheit Celsius   | F=1     | C=0     | -               |
-| **Decrease the Temp.**       | IntexSpa/Cmd decrease            | UP=1    | -       | -               |
-| **Increase the Temp.**       | IntexSpa/Cmd increase            | Down=1  | -       | -  
-| **ESP Reset**                | IntexSpa/Cmd Reset ESP            | reset | -       | -             |  
-| **Command Setpoint of Temp.**       | IntexSpa/Cmd Temperature Setpoint| "set a number"  | -       | -
-| **Status Communication with pump**| IntexSpa/Communication with pump | Com/OK=1   | 0=lost connection       | -   |Yes           |
-| **Heater Status**                   | IntexSpa/heater state       | standby=1 & ON=2  | OFF=0    | Yes
-| **Status Setpoint Temp.**         | IntexSpa/Temperature Setpoint    | -       | -       | Yes
-| **Send °F Temp.**     | IntexSpa/Farenheit Celsius       | -       | -       | Yes             |             |
-| **Send Actual Temp.**        | IntexSpa/Actual Temperature      | -       | -       | Yes             |
-| **Send Error Message**       | IntexSpa/Error Number            | -       | -       | Yes             |
-| **Status Power on**          | IntexSpa/Power on                | -       | -       | Yes             |  
-| **Status Bubble on**         | IntexSpa/Bubble on               | -       | -       | Yes             |  
-| **Status Heater on**         | IntexSpa/heater on               | -       | -       | Yes             |  
-| **Status Filter on**         | IntexSpa/filter on               | -       | -       | Yes             |
-| **Status Filter Timer**         | IntexSpa/filter setup time               | -       | -       | Yes             |    
+| **Power**                    | IntexSpa/Cmd-Power-on-off        | ON=1    | OFF=0   | -               |
+| **Water Filter**             | IntexSpa/Cmd-water-filter-on-off | ON=1    | OFF=0   | -               |
+| **Water Filter Timer**        | IntexSpa/Cmd-water-filter-time   | hours=2,4,6       | -   | -               |
+| **Bubble**                   | IntexSpa/Cmd-bubble-on-off       | ON=1    | OFF=0   | -               |
+| **Heater**                   | IntexSpa/Cmd-heater-on-off       | ON=1    | OFF=0   | -               |
+| **Change Farenheit/Celsius** | IntexSpa/Cmd-Farenheit-Celsius   | F=1     | C=0     | -               |
+| **Decrease the Temp.**       | IntexSpa/Cmd-decrease            | UP=1    | -       | -               |
+| **Increase the Temp.**       | IntexSpa/Cmd-increase            | Down=1  | -       | -  
+| **ESP Reset**                | IntexSpa/Cmd-Reset-ESP            | reset | -       | -             |  
+| **Command Setpoint of Temp.**       | IntexSpa/Cmd-Temperature-Setpoint| "set a number"  | -       | -
+| **Status Communication with pump**| IntexSpa/Communication-with-pump | Com/OK=1   | 0=lost connection       | -   |Yes           |
+| **Heater Status**                   | IntexSpa/heater-state       | standby=1 & ON=2  | OFF=0    | Yes
+| **Status Setpoint Temp.**         | IntexSpa/Temperature-Setpoint    | -       | -       | Yes
+| **Send °F Temp.**     | IntexSpa/Farenheit-Celsius       | -       | -       | Yes             |             |
+| **Send Actual Temp.**        | IntexSpa/Actual-Temperature      | -       | -       | Yes             |
+| **Send Error Message**       | IntexSpa/Error-Number            | -       | -       | Yes             |
+| **Status Power on**          | IntexSpa/Power-on                | -       | -       | Yes             |  
+| **Status Bubble on**         | IntexSpa/Bubble-on               | -       | -       | Yes             |  
+| **Status Heater on**         | IntexSpa/heater-on               | -       | -       | Yes             |  
+| **Status Filter on**         | IntexSpa/filter-on               | -       | -       | Yes             |
+| **Status Filter Timer**         | IntexSpa/filter-setup-time               | -       | -       | Yes             |    
 
 
 
@@ -152,12 +152,12 @@ const char* Mypassword = "YourPassword";
  
 | Description | Topic String                   | Payload | Payload | Only Status          |
 |-------------|--------------------------------|---------|---------|-----------------|
-| **Water Jet**             |  IntexSpa/Cmd water jet on off | ON=1    | OFF=0   | -               |
-| **Sanitizer**               | IntexSpa/Cmd sanitizer on off    | ON=1    | OFF=0   | -               |
-| **Status Water Jet**      | IntexSpa/Water jet on          | -       | -       | Yes             |
-| **Sanitizer Timer**               | IntexSpa/Cmd Sanitizer time    | hours=3,5,8    | -  | -               |
-| **Status Sanitizer**        | IntexSpa/Sanitizer on            | -       | -       | Yes             |
-| **Status Sanitizer Timer**        | IntexSpa/Sanitizer setup time            | -       | -       | Yes             |
+| **Water Jet**             |  IntexSpa/Cmd-water-jet-on-off | ON=1    | OFF=0   | -               |
+| **Sanitizer**               | IntexSpa/Cmd-sanitizer-on-off    | ON=1    | OFF=0   | -               |
+| **Status Water Jet**      | IntexSpa/Water-jet-on          | -       | -       | Yes             |
+| **Sanitizer Timer**               | IntexSpa/Cmd-Sanitizer-time    | hours=3,5,8    | -  | -               |
+| **Status Sanitizer**        | IntexSpa/Sanitizer-on            | -       | -       | Yes             |
+| **Status Sanitizer Timer**        | IntexSpa/Sanitizer-setup-time            | -       | -       | Yes             |
 
 
 
@@ -246,8 +246,7 @@ you can found some information/help (in french) on the [Jeedom Community thread]
 
 
 ## Known issues
--  **MySensors isn't implemented** 
 
-
+**Thanks Yogui79 for [Original Project](https://github.com/Yogui79/IntexPureSpa)**
 **Thanks [@LEECHER1](https://github.com/LEECHER1) for this documentation and all test he do**
 
